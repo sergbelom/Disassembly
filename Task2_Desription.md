@@ -10,10 +10,45 @@
 
 Java:
 
-- *javap -c* позволяет дизассемблировать код и получить инструкции, содержащие байт-коды Java, для каждого из методов класса. 
+- *javap -c* позволяет дизассемблировать код и получить инструкции, содержащие байт-коды Java, для каждого из методов класса. javap входит в openjdk.
 
-Например, можно получить упоминания инструкций new, return, invokevirtual, invokespecial и других.
+Используя утилиту, можно получить упоминания инструкций new, return, invokevirtual, invokespecial и других.
 
 C#:
 
 - dotPeek, ILSpy
+
+**Решение через скрипт, с использованием *javap* утилиты**
+
+Инструкция invokevirtual указывает на вызовы методов данного или других классов.
+
+Скрпит ReturnInvokeVirtual находит все строки с инструкцией invokevirtual, приводит строку к читаемому виду и выводит результат.
+
+В качетве результата выводится список используемых методов:
+
+Например: `java/lang/String.length`
+
+
+Cкрипт можно вызвать командой ./ReturnInvokeVirtual.sh и передать файл
+
+Примеры:
+
+1. Корректный файл
+
+`./ReturnInvokeVirtual.sh Brainfuck.Lexer.class`
+
+Результат:
+
+`java/lang/String.length`
+
+`java/lang/String.charAt`
+
+
+
+2. Некорректный файл
+
+`./ReturnInvokeVirtual.sh test.txt`
+
+Результат:
+
+`Error: incorrect input file`
