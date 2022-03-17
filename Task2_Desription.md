@@ -24,28 +24,49 @@ C#:
 
 Скрпит ReturnInvokeVirtual находит все строки с инструкцией invokevirtual, приводит строку к читаемому виду и выводит результат.
 
-В качетве результата выводится список используемых методов:
+В качестве результата выводится список используемых классов.
 
-Например: `java/lang/String.length`
+При этом скрипт делает постобработку после команды *javap -p -c*. Исключаются приватные методы и отбрасываются вызываемые методы, остаются только классы, при этом исключается дублирование. Например: `java/lang/String`
 
-
-Cкрипт можно вызвать командой ./ReturnInvokeVirtual.sh и передать файл
+Cкрипт можно вызвать командой ./ReturnInvokeVirtual.sh и передать class файл
 
 Примеры:
 
-1. Корректный файл
+1. Корректный небольшой файл:
 
 `./ReturnInvokeVirtual.sh Brainfuck.Lexer.class`
 
 Результат:
 
-`java/lang/String.length`
+`java/lang/String`
 
-`java/lang/String.charAt`
+2. Корректный файл с активным использованием классов:
 
+`./ReturnInvokeVirtual.sh ThreadPoolTests.class`
 
+Результат:
 
-2. Некорректный файл
+`java/lang/Integer`
+
+`java/lang/Object`
+
+`java/util/concurrent/CountDownLatch`
+
+`java/util/concurrent/ExecutionException`
+
+`org/assertj/core/api/AbstractBooleanAssert`
+
+`org/assertj/core/api/AbstractComparableAssert`
+
+`org/assertj/core/api/AbstractIntArrayAssert`
+
+`org/assertj/core/api/AbstractIntegerAssert`
+
+`org/assertj/core/api/AbstractThrowableAssert`
+
+`org/assertj/core/api/ListAssert`
+
+3. Некорректный файл
 
 `./ReturnInvokeVirtual.sh test.txt`
 
